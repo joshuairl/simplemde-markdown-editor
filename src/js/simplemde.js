@@ -2,7 +2,11 @@
 "use strict";
 var CodeMirror = require("codemirror");
 require("codemirror/addon/edit/continuelist.js");
+require("codemirror/addon/hint/show-hint.js");
+require("codemirror/addon/hint/anyword-hint.js");
+require("codemirror/addon/search/match-highlighter.js");
 require("./codemirror/tablist");
+require("./codemirror/autosuggest");
 require("codemirror/addon/display/fullscreen.js");
 require("codemirror/mode/markdown/markdown.js");
 require("codemirror/addon/mode/overlay.js");
@@ -1342,7 +1346,6 @@ function SimpleMDE(options) {
 		};
 	}
 
-
 	// Set default options for parsing config
 	options.parsingConfig = extend({
 		highlightFormatting: true // needed for toggleCodeBlock to detect types of code
@@ -1385,7 +1388,6 @@ function SimpleMDE(options) {
 		this.value(options.initialValue);
 	}
 }
-
 /**
  * Default markdown render.
  */
@@ -1483,6 +1485,8 @@ SimpleMDE.prototype.render = function(el) {
 		mode: mode,
 		backdrop: backdrop,
 		theme: "paper",
+		highlightSelectionMatches: (options.highlightSelectionMatches != undefined) ? options.highlightSelectionMatches : false,
+		autoSuggest: (options.autoSuggest != undefined) ? options.autoSuggest : [],
 		tabSize: (options.tabSize != undefined) ? options.tabSize : 2,
 		indentUnit: (options.tabSize != undefined) ? options.tabSize : 2,
 		indentWithTabs: (options.indentWithTabs === false) ? false : true,
